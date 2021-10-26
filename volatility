@@ -1,0 +1,62 @@
+# Volatility isn't a part of Kali Linux anymore for installation follow the steps
+
+# dependencies
+  sudo apt install -y build-essential git libdistorm3-dev yara libraw1394-11 libcapstone-dev capstone-tool tzdata
+
+# install pip2
+  sudo apt install -y python2 python2.7-dev libpython2-dev
+  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+  sudo python2 get-pip.py
+  sudo python2 -m pip install -U setuptools wheel
+
+# volatility2
+  python2 -m pip install -U distorm3 yara pycrypto pillow openpyxl ujson pytz ipython capstone
+  sudo python2 -m pip install yara
+  sudo ln -s /usr/local/lib/python2.7/dist-packages/usr/lib/libyara.so /usr/lib/libyara.so
+  python2 -m pip install -U git+https://github.com/volatilityfoundation/volatility.git
+  
+# install pip3
+  sudo apt install -y python3 python3-dev libpython3-dev python3-pip python3-setuptools python3-wheel
+  
+# volatility3
+  python3 -m pip install -U distorm3 yara pycrypto pillow openpyxl ujson pytz ipython capstone
+  python3 -m pip install -U git+https://github.com/volatilityfoundation/volatility3.git
+
+# add to path
+  Open terminal & bash enter
+  echo 'export PATH=/home/username/.local/bin:$PATH' >> ~/.bashrc <enter>
+  . ~/.bashrc <enter>
+
+VOLATILITY CHEATSHEET
+# change < ... > to your memory image and findings.
+  volatility -f <something.vmem> imageinfo
+# we get the profile then include in the commands
+# process list, tree and hiding processes
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> pslist
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> pstree
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> psview
+
+# socket information
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> conscan
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> sockets
+
+# last commands used, history etc.
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> cmdscan
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> cmdline
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> consoles
+
+# Dumping process, extracting according to findings
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> procdump -p <pid> --dump-dir </home/username/caseX>
+
+# Registry HIVES
+  volatility -f <something.vmem> --profile=<WinXPSP2x86> hivelist
+  volatility -f <something.vmvm> --profile=<WinXPSP2x86> printkey -K " <...reg key location here...>
+  
+
+# strings
+  strings <xxx.dmp> | grep <blah>
+  
+ Good Web Resources:
+ https://book.hacktricks.xyz/forensics/basic-forensic-methodology/memory-dump-analysis/volatility-examples
+ https://www.sans.org/posters/?focus-area=digital-forensics
+ 
