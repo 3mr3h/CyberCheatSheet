@@ -52,7 +52,6 @@ VOLATILITY CHEATSHEET
   volatility -f <something.vmem> --profile=<WinXPSP2x86> hivelist
   volatility -f <something.vmvm> --profile=<WinXPSP2x86> printkey -K " <...reg key location here...>
   
-
 # strings
   strings <xxx.dmp> | grep <blah>
   
